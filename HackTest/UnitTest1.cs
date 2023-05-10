@@ -1,5 +1,7 @@
 using HackApi;
+using HackApi.Controllers;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 
 namespace HackTest;
 
@@ -32,7 +34,7 @@ public class UnitTest1 : IClassFixture<ApiWebApplicationFactory>
     {
         var client = _factory.CreateClient();
 
-        var forecasts = await client.GetFromJsonAsync<WeatherForecast>("/WeatherForecast/One");
+        var forecasts = await client.GetFromJsonAsync<WeatherForecast>("/WeatherForecast/Two");
 
         Assert.Equal("fromtestsettings", forecasts?.Summary);
     }
@@ -53,5 +55,26 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>
 
             config.AddConfiguration(Configuration);
         });
+
+        builder.ConfigureTestServices(services =>
+        {
+            services.AddTransient<ITimeService, FakeTimeService>(_ => new FakeTimeService(new DateTime(2000, 1, 1)));
+        });
+    }
+}
+
+public class FakeTimeService : ITimeService
+{
+    private readonly DateTime _fakeTime;
+
+    public FakeTimeService(DateTime fakeTime)
+    {
+        _fakeTime = fakeTime;
+    }
+
+
+    public DateTime GetCurrentTime()
+    {
+        return _fakeTime;
     }
 }

@@ -13,11 +13,13 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly IConfiguration _configuration;
+    private readonly ITimeService _timeService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration, ITimeService timeService)
     {
         _logger = logger;
         _configuration = configuration;
+        _timeService = timeService;
     }
 
     [HttpGet()]
@@ -25,7 +27,7 @@ public class WeatherForecastController : ControllerBase
     {
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
-            Date = DateTime.Now.AddDays(index),
+            Date = _timeService.GetCurrentTime().AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
@@ -37,9 +39,33 @@ public class WeatherForecastController : ControllerBase
     {
         return new WeatherForecast
         {
-            Date = DateTime.Now.AddDays(67),
-            TemperatureC = Random.Shared.Next(-20, 55),
+            Date = _timeService.GetCurrentTime(),
+            TemperatureC = 10,
+            Summary = "Cool"
+        };
+    }
+
+    [HttpGet("Two")]
+    public WeatherForecast GetTwo()
+    {
+        return new WeatherForecast
+        {
+            Date = _timeService.GetCurrentTime(),
+            TemperatureC = 10,
             Summary = _configuration.GetConnectionString("foodb")
         };
+    }
+}
+
+public interface ITimeService
+{
+    DateTime GetCurrentTime();
+}
+
+public class TimeService : ITimeService
+{
+    public DateTime GetCurrentTime()
+    {
+        return DateTime.Now;
     }
 }
