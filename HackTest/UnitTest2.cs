@@ -1,5 +1,4 @@
 using FluentAssertions;
-using HackApi;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace HackTest;
@@ -16,7 +15,7 @@ public class UnitTest2 : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task CanGetWeatherForecast1()
+    public async Task The_user_can_get_a_weather_forecast1()
     {
         var forecast = await _systemUnderTest.GetFromJsonAsync<WeatherForecastDto>("/WeatherForecast/One");
 
@@ -27,7 +26,7 @@ public class UnitTest2 : IClassFixture<WebApplicationFactory<Program>>
     }
     
     [Fact]
-    public async Task CanGetWeatherForecast2()
+    public async Task The_user_can_get_a_weather_forecast2()
     {
         var forecast = await _systemUnderTest.GetFromJsonAsync<WeatherForecastDto>("/WeatherForecast/One");
 
