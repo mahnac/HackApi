@@ -35,9 +35,9 @@ public class WeatherForecastController : ControllerBase
     {
         return new WeatherForecast
         {
-            Date = DateTime.Now.AddDays(67),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            Date = new DateTime(2000, 1, 1),
+            TemperatureC = 10,
+            Summary = "Cool"
         };
     }
 }
