@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace HackTest;
 
-public class UnitTest2 : IClassFixture<WebApplicationFactory<Program>>
+public class UnitTest2 : IClassFixture<ApiWebApplicationFactory>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    private readonly HttpClient _systemUnderTest;
+    private readonly ApiWebApplicationFactory _factory;
+    private readonly HttpClient _client;
 
-    public UnitTest2(WebApplicationFactory<Program> factory)
+    public UnitTest2(ApiWebApplicationFactory factory)
     {
         _factory = factory;
         _systemUnderTest = _factory.CreateClient();
