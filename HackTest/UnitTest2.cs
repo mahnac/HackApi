@@ -6,7 +6,7 @@ namespace HackTest;
 public class UnitTest2 : IClassFixture<ApiWebApplicationFactory>
 {
     private readonly ApiWebApplicationFactory _factory;
-    private readonly HttpClient _client;
+    private readonly HttpClient _systemUnderTest;
 
     public UnitTest2(ApiWebApplicationFactory factory)
     {
